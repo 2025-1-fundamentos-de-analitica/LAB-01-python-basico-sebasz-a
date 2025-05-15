@@ -6,6 +6,8 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from itertools import groupby
+
 def pregunta_09():
     """
     Retorne un diccionario que contenga la cantidad de registros en que
@@ -24,3 +26,14 @@ def pregunta_09():
      'jjj': 18}}
 
     """
+
+    with open("files/input/data.csv", "r") as file:
+        sequence = [line.split()[4].strip() for line in file]
+    
+    sequence = [pair for line in sequence for pair in line.split(",")]
+    sequence = [(pair.split(":")[0], 1) for pair in sequence]
+    
+    sequence.sort(key=lambda x: x[0])
+    result = {key: sum(value for _, value in group) for key, group in groupby(sequence, key=lambda x: x[0])}
+    
+    return result

@@ -20,3 +20,10 @@ def pregunta_10():
 
 
     """
+
+    with open("files/input/data.csv", "r") as file:
+        sequence = [(line.split()[0], line.split()[3], line.split()[4]) for line in file]
+
+    result = [(line[0], len(line[1].split(",")), len(line[2].split(","))) for line in sequence]
+
+    return result

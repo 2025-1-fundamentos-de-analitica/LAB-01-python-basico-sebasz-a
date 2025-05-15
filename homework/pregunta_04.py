@@ -6,6 +6,8 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from itertools import groupby
+
 def pregunta_04():
     """
     La columna 3 contiene una fecha en formato `YYYY-MM-DD`. Retorne la
@@ -26,3 +28,12 @@ def pregunta_04():
      ('12', 3)]
 
     """
+    
+    with open("files/input/data.csv", "r") as file:
+        sequence = [(line.split()[2], 1) for line in file]
+
+    sequence = [(date[0].split("-")[1], date[1]) for date in sequence]
+    sequence.sort(key=lambda x: x[0])
+    result = [(key, sum(value for _, value in group)) for key, group in groupby(sequence, key=lambda x: x[0])]
+    
+    return result

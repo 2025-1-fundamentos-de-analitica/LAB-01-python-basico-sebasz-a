@@ -6,6 +6,8 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from itertools import groupby
+
 def pregunta_11():
     """
     Retorne un diccionario que contengan la suma de la columna 2 para cada
@@ -16,3 +18,13 @@ def pregunta_11():
 
 
     """
+
+    with open("files/input/data.csv", "r") as file:
+        sequence = [(line.split()[3], int(line.split()[1])) for line in file]
+
+    sequence = [(letters, pair[1]) for pair in sequence for letters in pair[0].split(",")]
+
+    sequence.sort(key=lambda x: x[0])
+    result = {key:sum(value for _, value in group) for key, group in groupby(sequence, key=lambda x: x[0])}
+    
+    return result

@@ -6,6 +6,8 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from itertools import groupby
+
 def pregunta_02():
     """
     Retorne la cantidad de registros por cada letra de la primera columna como
@@ -15,3 +17,11 @@ def pregunta_02():
     [('A', 8), ('B', 7), ('C', 5), ('D', 6), ('E', 14)]
 
     """
+
+    with open("files/input/data.csv", "r") as file:
+        sequence = [(line.split()[0], 1) for line in file]
+    
+    sequence.sort(key=lambda x: x[0])
+    result = [(letter, sum(value for _, value in group)) for letter, group in groupby(sequence, lambda x: x[0])]
+    
+    return result

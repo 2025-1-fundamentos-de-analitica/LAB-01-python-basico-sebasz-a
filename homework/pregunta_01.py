@@ -14,3 +14,9 @@ def pregunta_01():
     214
 
     """
+    with open("files/input/data.csv", "r") as file:
+        suma = 0
+        for line in file:
+            suma += int(line.split()[1])
+
+    return suma

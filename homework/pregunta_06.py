@@ -6,6 +6,8 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from itertools import groupby
+
 def pregunta_06():
     """
     La columna 5 codifica un diccionario donde cada cadena de tres letras
@@ -26,3 +28,21 @@ def pregunta_06():
      ('jjj', 5, 17)]
 
     """
+
+    with open("files/input/data.csv", "r") as file:
+        sequence = [line.split()[4].strip() for line in file]
+    
+    sequence = [pair for line in sequence for pair in line.split(",")]
+    sequence = [(pair.split(":")[0], int(pair.split(":")[1])) for pair in sequence]
+    
+    sequence.sort(key=lambda x: x[0])
+    result = []
+    for key, group in groupby(sequence, key=lambda x: x[0]):
+        max_n = min_n = next(group)[1]
+        for _, value in group:
+            max_n = max(max_n, value)
+            min_n = min(min_n, value)
+    
+        result.append((key, min_n, max_n))
+
+    return result

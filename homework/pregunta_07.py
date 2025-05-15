@@ -6,6 +6,8 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from itertools import groupby
+
 def pregunta_07():
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
@@ -25,3 +27,13 @@ def pregunta_07():
      (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
 
     """
+
+    with open("files/input/data.csv", "r") as file:
+        sequence = [(int(line.split()[1]), line.split()[0]) for line in file]
+    
+    sequence.sort(key=lambda x: x[0])
+    result = []
+    for key, group in groupby(sequence, key=lambda x: x[0]):
+        result.append((key, [letter for _, letter in group]))
+    
+    return result
